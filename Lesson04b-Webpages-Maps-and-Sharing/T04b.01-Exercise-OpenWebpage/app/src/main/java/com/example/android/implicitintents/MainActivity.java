@@ -15,6 +15,10 @@
  */
 package com.example.android.implicitintents;
 
+import android.bluetooth.BluetoothClass;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -36,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickOpenWebpageButton(View v) {
         // TODO (5) Create a String that contains a URL ( make sure it starts with http:// or https:// )
+        String url = "https://www.google.com";
+
 
         // TODO (6) Replace the Toast with a call to openWebPage, passing in the URL String from the previous step
-        Toast.makeText(this, "TODO: Open a web page when this button is clicked", Toast.LENGTH_SHORT).show();
+        openWebPage(url);
     }
 
     /**
@@ -79,6 +85,16 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO (1) Create a method called openWebPage that accepts a String as a parameter
     // Do steps 2 - 4 within openWebPage
+    public void openWebPage(String url) {
+        Uri u = Uri.parse(url);
+
+        Intent i = new Intent(Intent.ACTION_VIEW,u);
+
+        PackageManager pm = this.getBaseContext().getPackageManager();
+        if (pm.hasSystemFeature(PackageManager.FEATURE_WEBVIEW)) {
+            startActivity(i);
+        }
+    }
 
         // TODO (2) Use Uri.parse to parse the String into a Uri
 
