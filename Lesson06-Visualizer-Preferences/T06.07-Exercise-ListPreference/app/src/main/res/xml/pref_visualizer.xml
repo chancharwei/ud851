@@ -25,4 +25,13 @@
 
     <!-- TODO (1) Add a list preference -->
 
+    <ListPreference
+        android:defaultValue="@string/pref_color_red_value"
+        android:entries="@array/array_pref_color_labels"
+        android:entryValues="@array/array_pref_color_values"
+        android:title="@string/pref_color_label"
+        android:key="@string/pref_color_key">
+
+    </ListPreference>
+
 </PreferenceScreen>

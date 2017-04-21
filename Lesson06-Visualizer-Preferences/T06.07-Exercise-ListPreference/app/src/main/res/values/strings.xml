@@ -29,6 +29,19 @@
     <!-- TODO (3) Add a res->values->arrays.xml file which contains two arrays, one for
         labels and one for values. The arrays should contain strings found in this file-->
 
+    <string name="pref_color_label" translatable="false">Colour</string>
+    <string name="pref_color_key" translatable="false">pref_color</string>
+
+
+    <!-- Value in SharedPreferences for red color option -->
+    <string name="pref_color_red_label" translatable="false">Red</string>
+
+    <!-- Value in SharedPreferences for blue color option -->
+    <string name="pref_color_blue_label" translatable="false">Blue</string>
+
+    <!-- Value in SharedPreferences for green color option -->
+    <string name="pref_color_green_label" translatable="false">Green</string>
+
     <!-- Value in SharedPreferences for red color option -->
     <string name="pref_color_red_value" translatable="false">red</string>
 

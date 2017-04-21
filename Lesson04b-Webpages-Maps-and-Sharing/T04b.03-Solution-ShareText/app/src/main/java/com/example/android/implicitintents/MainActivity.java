@@ -18,6 +18,7 @@ package com.example.android.implicitintents;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.support.v7.app.AppCompatActivity;
@@ -71,8 +72,7 @@ public class MainActivity extends AppCompatActivity {
         // COMPLETED (5) Specify a String you'd like to share
         /* Create the String that you want to share */
         String textThatYouWantToShare =
-                "Sharing the coolest thing I've learned so far. You should " +
-                        "check out Udacity and Google's Android Nanodegree!";
+                "bob@factuur.ing.nl";
 
         // COMPLETED (6) Replace the Toast with shareText, passing in the String from step 5
         /* Send that text to our method that will share it. */
@@ -88,11 +88,15 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param v Button that was clicked.
      */
-    public void createYourOwn(View v) {
-        Toast.makeText(this,
-                "TODO: Create Your Own Implicit Intent",
-                Toast.LENGTH_SHORT)
-                .show();
+    public void createContact(View v) {
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+        intent.putExtra(ContactsContract.Intents.Insert.NAME, "ING Facturen");
+        intent.putExtra(ContactsContract.Intents.Insert.EMAIL, "bob@factuur.ing.nl");
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+
     }
 
     /**
@@ -175,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
         // COMPLETED (3) Create a title for the chooser window that will pop up
         /* This is just the title of the window that will pop up when we call startActivity */
-        String title = "Learning How to Share";
+        String title = "ING Facturen";
 
         // COMPLETED (4) Use ShareCompat.IntentBuilder to build the Intent and start the chooser
         /* ShareCompat.IntentBuilder provides a fluent API for creating Intents */
