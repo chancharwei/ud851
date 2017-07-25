@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.BatteryManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -83,11 +85,25 @@ public class MainActivity extends AppCompatActivity implements
         // In Android M and beyond you can simply get a reference to the BatteryManager and call
         // isCharging.
 
-        // TODO (1) Check if you are on Android M or later, if so...
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            BatteryManager batteryManager = (BatteryManager) getSystemService(BATTERY_SERVICE);
+            boolean isCharging = batteryManager.isCharging();
+            showCharging(isCharging);
+
+            // TODO (1) Check if you are on Android M or later, if so...
             // TODO (2) Get a BatteryManager instance using getSystemService()
             // TODO (3) Call isCharging on the battery manager and pass the result on to your show
             // charging method
 
+        } else {
+            IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+            Intent batteryStatus = registerReceiver(null, ifilter);
+
+            int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+
+            boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL;
+            showCharging(isCharging);
+        }
         // TODO (4) If your user is not on M+, then...
             // TODO (5) Create a new intent filter with the action ACTION_BATTERY_CHANGED. This is a
             // sticky broadcast that contains a lot of information about the battery state.

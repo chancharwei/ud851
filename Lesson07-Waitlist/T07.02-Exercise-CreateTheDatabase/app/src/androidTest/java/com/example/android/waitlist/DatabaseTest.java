@@ -269,7 +269,7 @@ public class DatabaseTest {
     void deleteTheDatabase(){
         try {
             /* Use reflection to get the database name from the db helper class */
-            Field f = mDbHelperClass.getDeclaredField("DATABASE_NAME");
+            Field f = mDbHelperClass.getDeclaredField("DATABASE_FILE_NAME");
             f.setAccessible(true);
             mContext.deleteDatabase((String)f.get(null));
         }catch (NoSuchFieldException ex){

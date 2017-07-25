@@ -16,10 +16,16 @@
 
 package com.udacity.example.quizexample;
 
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.udacity.example.droidtermsprovider.DroidTermsExampleContract;
 
 /**
  * Gets the data from the ContentProvider and shows a series of flash cards.
@@ -32,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO (3) Create an instance variable storing a Cursor called mData
     private Button mButton;
+
+    Cursor mData;
 
     // This state is when the word definition is hidden and clicking the button will therefore
     // show the definition
@@ -51,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         mButton = (Button) findViewById(R.id.button_next);
 
         // TODO (5) Create and execute your AsyncTask here
+
+        new droidTerms().execute();
     }
 
     /**
@@ -88,6 +98,31 @@ public class MainActivity extends AppCompatActivity {
 
         mCurrentState = STATE_SHOWN;
 
+    }
+
+    private class droidTerms extends AsyncTask<Void, Void, Cursor> {
+
+        @Override
+        protected Cursor doInBackground(Void... params) {
+            ContentResolver cr = getContentResolver();
+            return cr.query(DroidTermsExampleContract.CONTENT_URI, null, null, null, null);
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            mData = cursor;
+
+            if (mData.getPosition() == -1) {
+                mData.moveToNext();
+            }
+
+            TextView vDefinition = (TextView) findViewById(R.id.text_view_definition);
+            vDefinition.setText(mData.getString(DroidTermsExampleContract.COLUMN_INDEX_WORD));
+
+
+
+            super.onPostExecute(cursor);
+        }
     }
 
     // TODO (1) Create AsyncTask with the following generic types <Void, Void, Cursor>

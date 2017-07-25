@@ -269,7 +269,6 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/tableHeaderImage"
             app:layout_constraintLeft_toLeftOf="@+id/textViewTerminal"
             app:layout_constraintRight_toRightOf="@+id/textViewTerminal"
 
